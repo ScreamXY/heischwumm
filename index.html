@@ -5,134 +5,35 @@
   <meta charset="utf-8">
   <title>Heischwumm</title>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="styles.css">
 
   <!-- css area -->
   <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css" />
+
+  <link rel="stylesheet" href="./app/styles/style.css">
 </head>
 
 <body>
-  <md-content class="md-padding" layout="column" layout-aligne="center center" flex="100">
-    <h1 style="align-self: center;">Heischwumm</h1>
-    <div ng-controller="HomeController as vm" ng-cloak>
-      <div layout="row" flex="100">
-        <div layout="column" flex="50">
-          <h2>Aare</h2>
-          <div>Zeit: {{vm.aare.date | date : 'dd.MM.yyyy HH:mm'}}</div>
-          <div>Temp: {{vm.aare.temperature}}°C {{vm.aare.temperature_text}}</div>
-          <div>Flow: {{vm.aare.flow}}</div>
-          <div>Height: {{vm.aare.height}}</div>
-          <div>Source: {{vm.aare.source}}</div>
-        </div>
-        <div layout="column" flex="50">
-          <h2>Luft</h2>
-          <div>{{vm.weather.name}} {{vm.weather.weather[0].main}} {{vm.weather.weather[0].description}}</div>
-          <div layout="column">
-            <div layout="row">
-              <div>Sonnenaufgang</div>
-              <div>{{vm.weather.sys.sunrise * 1000 | date : 'HH:mm'}}</div>
-            </div>
-            <div layout="row">
-              <div>Sonnenuntergang</div>
-              <div>{{vm.weather.sys.sunset * 1000 | date : 'HH:mm'}}</div>
-            </div>
-            <div layout="row">
-              <div>Temp</div>
-              <div>{{vm.weather.main.temp}}</div>
-            </div>
-            <div layout="row">
-              <div>Temp Max</div>
-              <div>{{vm.weather.main.temp_max}}</div>
-            </div>
-            <div layout="row">
-              <div>Temp Min</div>
-              <div>{{vm.weather.main.temp_min}}</div>
-            </div>
-            <div layout="row">
-              <div>Luftdruck</div>
-              <div>{{vm.weather.main.pressure}}</div>
-            </div>
-            <div layout="row">
-              <div>Feuchtigkeit</div>
-              <div>{{vm.weather.main.humidity}}</div>
-            </div>
-            <div layout="row">
-              <div>Wind</div>
-              <div>{{vm.weather.wind.speed}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div layout="row" flex="100">
-        <div layout="column" flex="50">
-          <h2>Thun</h2>
-          <div>
-            <div ng-repeat="connection in vm.thun.connections" layout="column">
-              <div ng-if="$first" layout="row">
-                <div>{{connection.from.station.name}}</div>
-                <div>-</div>
-                <div>{{connection.to.station.name}}</div>
-              </div>
-              <div layout="column" flex>
-                <div ng-if="$first" layout="row" flex>
-                  <div flex="10">Abfahrt</div>
-                  <div flex="10">Gleis</div>
-                  <div flex="10">Ankunft</div>
-                  <div flex="10">Gleis</div>
-                </div>
-                <div layout="row">
-                  <div flex="10">{{connection.from.departureTimestamp * 1000 | date : 'HH:mm'}} {{vm.getDelayString(connection.from.delay)}}</div>
-                  <div flex="10">{{connection.from.platform}}</div>
-                  <div flex="10">{{connection.to.arrivalTimestamp * 1000 | date : 'HH:mm'}} {{vm.getDelayString(connection.to.delay)}}</div>
-                  <div flex="10">{{connection.to.platform}}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div layout="column" flex="50">
-          <h2>Muri</h2>
-          <div>
-            <div ng-repeat="connection in vm.muri.connections" layout="column">
-              <div ng-if="$first" layout="row">
-                <div>{{connection.from.station.name}}</div>
-                <div>-</div>
-                <div>{{connection.to.station.name}}</div>
-              </div>
-              <div layout="column" flex>
-                <div ng-if="$first" layout="row" flex>
-                  <div flex="10">Abfahrt</div>
-                  <div flex="10">Gleis</div>
-                  <div flex="10">Ankunft</div>
-                  <div flex="10">Gleis</div>
-                </div>
-                <div layout="row">
-                  <div flex="10">{{connection.from.departureTimestamp * 1000 | date : 'HH:mm'}} {{vm.getDelayString(connection.from.delay)}}</div>
-                  <div flex="10">{{connection.from.platform}}</div>
-                  <div flex="10">{{connection.to.arrivalTimestamp * 1000 | date : 'HH:mm'}} {{vm.getDelayString(connection.to.delay)}}</div>
-                  <div flex="10">{{connection.to.platform}}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="background"></div>
+  <div class="waves"></div>
+  <md-content layout="column" layout-fill>
+    <div class="content" ng-view=""></div>
   </md-content>
 
 
   <!-- Load libraries -->
-  <script src="node_modules/systemjs/dist/system.src.js"></script>
   <script src="node_modules/angular/angular.js"></script>
+  <script src="node_modules/angular-route/angular-route.js"></script>
   <script src="node_modules/angular-animate/angular-animate.js"></script>
   <script src="node_modules/angular-aria/angular-aria.js"></script>
-  <script src="node_modules/angular-material/angular-material.js">
-    </script
+  <script src="node_modules/angular-material/angular-material.js"></script>
 
-    <!-- Load scripts -->
-    <script src="app/app.module.js">
-  </script>
+  <!-- Load scripts -->
+  <script src="app/app.module.js"></script>
+  <script src="app/app.config.js"></script>
+  <script src="app/app.routes.js"></script>
   <script src="app/home/home.controller.js"></script>
+  <script src="app/sbb/sbb.controller.js"></script>
+  <script src="app/sbb/connection.directive.js"></script>
   <script src="app/services/aare.service.js"></script>
   <script src="app/services/sbb.service.js"></script>
   <script src="app/services/weather.service.js"></script>

@@ -5,23 +5,50 @@
     .module('heischwumm')
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['AareService', 'SbbService', 'WeatherService'];
-  function HomeController(AareService, SbbService, WeatherService) {
+  HomeController.$inject = ['$timeout', 'AareService', 'SbbService', 'WeatherService'];
+  function HomeController($timeout, AareService, SbbService, WeatherService) {
     var vm = this;
+
+    var timeTillReload = 300;
+    var counterSpeed = 1000;
+
+    vm.timer = 0;
+    vm.date = null;
     vm.aare = null;
     vm.thun = null;
     vm.muri = null;
     vm.weather = null;
     vm.title = 'Home';
+    vm.loaded = {};
+    vm.loaded.aare = false;
+    vm.loaded.thun = false;
+    vm.loaded.muri = false;
+    vm.loaded.weather = false;
     vm.init = init;
     vm.getDelayString = getDelayString;
+    vm.getTimeCounter = getTimeCounter;
 
     init();
 
     function init() {
+      vm.date = new Date();
+      counter();
       getAareData();
       getWeatherData();
       getSbbData();
+    }
+
+    function counter() {
+      vm.timer++;
+      if(vm.timer > timeTillReload) {
+        vm.timer = 0;
+        vm.date = new Date();
+        init();
+      } else {
+        $timeout(function() {
+          counter();
+        }, counterSpeed);
+      }
     }
 
     function getDelayString(delay) {
@@ -31,12 +58,16 @@
     }
 
     function getAareData() {
+      vm.loaded.aare = false;
       AareService.getCurrentInformation()
         .success(function(data, status) {
           vm.aare = data;
         })
         .error(function(data, status) {
           console.error(data || 'Request failed');
+        })
+        .finally(function() {
+          vm.loaded.aare = true;
         });
     }
 
@@ -47,6 +78,9 @@
         })
         .error(function(data, status) {
           console.error(data || 'Request failed');
+        })
+        .finally(function() {
+          vm.loaded.weather = true;
         });
     }
 
@@ -57,6 +91,9 @@
         })
         .error(function(data, status) {
           console.error(data || 'Request failed');
+        })
+        .finally(function() {
+          vm.loaded.thun = true;
         });
 
       SbbService.getCurrentConnection('Gümligen', 'Muri bei Bern')
@@ -65,7 +102,14 @@
         })
         .error(function(data, status) {
           console.error(data || 'Request failed');
+        })
+        .finally(function() {
+          vm.loaded.muri = true;
         });
+    }
+
+    function getTimeCounter() {
+      return Math.floor((timeTillReload - vm.timer) / 60) + ':' + (timeTillReload - vm.timer) % 60;
     }
   }
 })();

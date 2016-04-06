@@ -1,0 +1,84 @@
+<div layout="row" layout-aligne="center center" flex="100">
+  <h1>Heischwumm</h1>
+  <h2>{{vm.date}}</h2>
+  <h2>Reloading in {{vm.getTimeCounter()}}</h2>
+</div>
+<div>
+  <div class="container aare" layout="column">
+    <h3>Aare</h3>
+    <div ng-if="vm.loaded.aare">
+      <div>Zeit: {{vm.aare.date | date : 'dd.MM.yyyy HH:mm'}}</div>
+      <div>Temp: {{vm.aare.temperature}}°C {{vm.aare.temperature_text}}</div>
+      <div>Flow: {{vm.aare.flow}}</div>
+      <div>Height: {{vm.aare.height}}</div>
+      <div>Source: {{vm.aare.source}}</div>
+    </div>
+    <div ng-if="!vm.loaded.aare">
+      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+    </div>
+  </div>
+
+  <div class="container weather" layout="column">
+    <h3>Luft</h3>
+    <div ng-if="vm.loaded.weather">
+      <div>{{vm.weather.name}} {{vm.weather.weather[0].main}} {{vm.weather.weather[0].description}}</div>
+      <div layout="column">
+        <div layout="row">
+          <div>Sonnenaufgang</div>
+          <div>{{vm.weather.sys.sunrise * 1000 | date : 'HH:mm'}}</div>
+        </div>
+        <div layout="row">
+          <div>Sonnenuntergang</div>
+          <div>{{vm.weather.sys.sunset * 1000 | date : 'HH:mm'}}</div>
+        </div>
+        <div layout="row">
+          <div>Temp</div>
+          <div>{{vm.weather.main.temp}}</div>
+        </div>
+        <div layout="row">
+          <div>Temp Max</div>
+          <div>{{vm.weather.main.temp_max}}</div>
+        </div>
+        <div layout="row">
+          <div>Temp Min</div>
+          <div>{{vm.weather.main.temp_min}}</div>
+        </div>
+        <div layout="row">
+          <div>Luftdruck</div>
+          <div>{{vm.weather.main.pressure}}</div>
+        </div>
+        <div layout="row">
+          <div>Feuchtigkeit</div>
+          <div>{{vm.weather.main.humidity}}</div>
+        </div>
+        <div layout="row">
+          <div>Wind</div>
+          <div>{{vm.weather.wind.speed}}</div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="!vm.loaded.weather">
+      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+    </div>
+  </div>
+
+  <div class="container sbb" layout="column">
+    <h3>Thun</h3>
+    <div ng-if="vm.loaded.thun">
+      <connection connection-data="vm.thun"></connection>
+    </div>
+    <div ng-if="!vm.loaded.thun">
+      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+    </div>
+  </div>
+
+  <div class="container sbb" layout="column">
+    <h3>Muri</h3>
+    <div ng-if="vm.loaded.muri">
+      <connection connection-data="vm.muri"></connection>
+    </div>
+    <div ng-if="!vm.loaded.muri">
+      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+    </div>
+  </div>
+</div>
