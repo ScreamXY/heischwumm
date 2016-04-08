@@ -1,11 +1,15 @@
-<div layout="row" layout-aligne="center center" flex="100">
-  <h1>Heischwumm</h1>
-  <h2>{{vm.date}}</h2>
-  <h2>Reloading in {{vm.getTimeCounter()}}</h2>
+<div layout="column" layout-aligne="center center" flex="100">
+  <h1 class="title">
+    Heischwumm
+    <h3 class="refresh" ng-click="vm.init();">
+      <i class="material-icons" style="refresh-icon">autorenew</i>
+      {{vm.getTimeCounter()}}
+      </h3>
+    </h1>
 </div>
 <div>
   <div class="container aare" layout="column">
-    <h3>Aare</h3>
+    <h3>Wasser Aare</h3>
     <div ng-if="vm.loaded.aare">
       <div>Zeit: {{vm.aare.date | date : 'dd.MM.yyyy HH:mm'}}</div>
       <div>Temp: {{vm.aare.temperature}}°C {{vm.aare.temperature_text}}</div>
@@ -14,7 +18,7 @@
       <div>Source: {{vm.aare.source}}</div>
     </div>
     <div ng-if="!vm.loaded.aare">
-      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+      <md-progress-circular md-mode="indeterminate" md-diameter="80"></md-progress-circular>
     </div>
   </div>
 
@@ -58,17 +62,23 @@
       </div>
     </div>
     <div ng-if="!vm.loaded.weather">
-      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+      <md-progress-circular md-mode="indeterminate" md-diameter="80"></md-progress-circular>
     </div>
   </div>
 
-  <div class="container sbb" layout="column">
+  <div class="line-upper"></div>
+  <div class="line-dot-upper"></div>
+  <div class="line-middle"></div>
+  <div class="line-dot"></div>
+  <div class="line-lower"></div>
+
+  <div class="container sbb" style="margin-bottom: 50px;" layout="column">
     <h3>Thun</h3>
     <div ng-if="vm.loaded.thun">
       <connection connection-data="vm.thun"></connection>
     </div>
     <div ng-if="!vm.loaded.thun">
-      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+      <md-progress-circular md-mode="indeterminate" md-diameter="80"></md-progress-circular>
     </div>
   </div>
 
@@ -78,7 +88,7 @@
       <connection connection-data="vm.muri"></connection>
     </div>
     <div ng-if="!vm.loaded.muri">
-      <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+      <md-progress-circular md-mode="indeterminate" md-diameter="80"></md-progress-circular>
     </div>
   </div>
 </div>
