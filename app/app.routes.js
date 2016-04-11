@@ -13,11 +13,6 @@
         controller: 'HomeController',
         controllerAs: 'vm'
       })
-      .when('/sbb', {
-        templateUrl: './app/sbb/sbb.html',
-        controller: 'SbbController',
-        controllerAs: 'vm'
-      })
       .otherwise({
         redirectTo: '/'
       });
