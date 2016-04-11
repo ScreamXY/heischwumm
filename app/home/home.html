@@ -1,4 +1,4 @@
-<div layout="column" layout-aligne="center center" flex="100">
+<div style="height: 100px;" layout="column" layout-aligne="center center" flex="100">
   <h1 class="title">
     Heischwumm
     <h3 class="refresh" ng-click="vm.init();">
@@ -7,7 +7,7 @@
       </h3>
     </h1>
 </div>
-<div layout="row" flex="100">
+<div style="height: calc(100vh - 100px);" layout="row" flex="100">
   <div style="height: 100%;" class="md-padding" layout="column" flex="50">
     <div class="container sbb" style="margin-bottom: 50px;" layout="column">
       <h3>Thun</h3>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div style="height: 100%;" class="md-padding" layout="column" flex="50">
+  <div style="height: 100%; position: relative" class="md-padding" layout="column" flex="50">
     <div class="container weather" layout="column">
       <h3>Luft</h3>
       <div ng-if="vm.loaded.weather">
@@ -90,13 +90,10 @@
     </div>
   </div>
 </div>
-
-
-
 <div>
   <div class="line-upper"></div>
   <div class="line-dot-upper"></div>
   <div class="line-middle"></div>
-  <div class="line-dot"></div>
+  <div class="line-dot-lower"></div>
   <div class="line-lower"></div>
 </div>
