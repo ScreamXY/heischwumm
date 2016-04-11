@@ -27,6 +27,7 @@
     vm.init = init;
     vm.getDelayString = getDelayString;
     vm.getTimeCounter = getTimeCounter;
+    vm.getDate = getDate;
 
     init();
 
@@ -110,6 +111,10 @@
 
     function getTimeCounter() {
       return Math.floor((timeTillReload - vm.timer) / 60) + ':' + (timeTillReload - vm.timer) % 60;
+    }
+
+    function getDate(date) {
+      return new Date(date);
     }
   }
 })();

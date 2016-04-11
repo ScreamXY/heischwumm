@@ -123,3 +123,10 @@ h3 {
   height: calc(100vh - 343px);
   border-left: 5px solid #074976;
 }
+.weather-icon {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: 60%;
+  top: 30px;
+}
