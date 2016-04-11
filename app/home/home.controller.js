@@ -28,12 +28,13 @@
     vm.getDelayString = getDelayString;
     vm.getTimeCounter = getTimeCounter;
     vm.getDate = getDate;
+    vm.reload = reload;
 
     init();
+    counter();
 
     function init() {
       vm.date = new Date();
-      counter();
       getAareData();
       getWeatherData();
       getSbbData();
@@ -73,6 +74,7 @@
     }
 
     function getWeatherData() {
+      vm.loaded.weather = false;
       WeatherService.getCurrentWeather()
         .success(function(data, status) {
           vm.weather = data;
@@ -86,6 +88,7 @@
     }
 
     function getSbbData() {
+      vm.loaded.thun = false;
       SbbService.getCurrentConnection('Gümligen', 'Thun')
         .success(function(data, status) {
           vm.thun = data;
@@ -97,6 +100,7 @@
           vm.loaded.thun = true;
         });
 
+      vm.loaded.muri = false;
       SbbService.getCurrentConnection('Gümligen', 'Muri bei Bern')
         .success(function(data, status) {
           vm.muri = data;
@@ -115,6 +119,12 @@
 
     function getDate(date) {
       return new Date(date);
+    }
+
+    function reload() {
+      vm.timer = 0;
+      vm.date = new Date();
+      init();
     }
   }
 })();
