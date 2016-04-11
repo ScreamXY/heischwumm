@@ -62,17 +62,13 @@ h3 {
   padding: 16px;
 }
 .aare {
-  position: absolute;
-  bottom: 16px;
-  right: 100px;
+  align-self: center;
 }
 .weather {
-  position: absolute;
-  top: 100px;
-  right: 100px;
+  align-self: center;
 }
 .sbb {
-  margin-left: 200px;
+  align-self: center;
 }
 .refresh {
   margin: 0 auto;
