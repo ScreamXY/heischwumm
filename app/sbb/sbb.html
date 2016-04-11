@@ -1,8 +1,7 @@
 <md-content class="md-padding" layout="column" flex="100">
 
-  <input type="text" ng-model="vm.from" placeholder="Von" />
-  <input type="text" ng-model="vm.to" placeholder="Nach" />
-  <button type="button" ng-click="vm.search()">Suchen...</button>
+  <input type="text" ng-model="vm.from" ng-model-options="{debounce: 500}" ng-change="vm.search()" placeholder="Von" />
+  <input type="text" ng-model="vm.to" ng-model-options="{debounce: 500}" ng-change="vm.search()" placeholder="Nach" />
 
   <h2 ng-if="vm.from && vm.to">{{vm.from}} - {{vm.to}}</h2>
 

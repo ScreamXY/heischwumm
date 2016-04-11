@@ -5,8 +5,8 @@
     .module('heischwumm')
     .controller('SbbController', SbbController);
 
-  SbbController.$inject = ['$http'];
-  function SbbController($http) {
+  SbbController.$inject = ['SbbService'];
+  function SbbController(SbbService) {
     var vm = this;
 
     vm.from = null;
@@ -14,17 +14,12 @@
     vm.loaded = true;
     vm.search = search;
 
+    ////////////////
+
     function search() {
       if (vm.from && vm.to) {
         vm.loaded = false;
-        var url = 'http://transport.opendata.ch/v1/connections';
-        var page = 0;
-        var limit = 2;
-        var from = vm.from;
-        var to = vm.to;
-        var query = url + '?from=' + from + '&to=' + to + '&limit=' + limit + '&page=' + page;
-
-        $http.get(query)
+        SbbService.getCurrentConnection(vm.from, vm.to)
           .success(function(data, status) {
             vm.data = data;
           })
