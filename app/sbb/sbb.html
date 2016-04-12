@@ -6,25 +6,7 @@
   <h2 ng-if="vm.from && vm.to">{{vm.from}} - {{vm.to}}</h2>
 
   <div ng-if="vm.loaded">
-    <div ng-repeat="connection in vm.data.connections" layout="column">
-      <div ng-if="$first" layout="row">
-        <div>{{connection.from.station.name}} - {{connection.to.station.name}}</div>
-      </div>
-      <div layout="column" flex>
-        <div ng-if="$first" layout="row" flex="100">
-          <div flex="25">Abfahrt</div>
-          <div flex="25">Gleis</div>
-          <div flex="25">Ankunft</div>
-          <div flex="25">Gleis</div>
-        </div>
-        <div layout="row" flex="100">
-          <div flex="25">{{connection.from.departureTimestamp * 1000 | date : 'HH:mm'}} {{vm.getDelayString(connection.from.delay)}}</div>
-          <div flex="25">{{connection.from.platform}}</div>
-          <div flex="25">{{connection.to.arrivalTimestamp * 1000 | date : 'HH:mm'}} {{vm.getDelayString(connection.to.delay)}}</div>
-          <div flex="25">{{connection.to.platform}}</div>
-        </div>
-      </div>
-    </div>
+    <connection connection-data="vm.data"></connection>
   </div>
   <div ng-if="!vm.loaded">
     <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
