@@ -2,7 +2,7 @@ HomeController.$inject = ['$timeout', 'AareService', 'SbbService', 'WeatherServi
 function HomeController($timeout, AareService, SbbService, WeatherService) {
   var vm = this;
 
-  var timeTillReload = 10;
+  var timeTillReload = 300;
   var counterSpeed = 1000;
 
   vm.timer = 0;

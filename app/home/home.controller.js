@@ -3,7 +3,7 @@ System.register([], function(exports_1, context_1) {
     var __moduleName = context_1 && context_1.id;
     function HomeController($timeout, AareService, SbbService, WeatherService) {
         var vm = this;
-        var timeTillReload = 10;
+        var timeTillReload = 300;
         var counterSpeed = 1000;
         vm.timer = 0;
         vm.date = null;
