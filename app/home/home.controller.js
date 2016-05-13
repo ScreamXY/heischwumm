@@ -1,130 +1,122 @@
-(function() {
-  'use strict';
-
-  angular
-    .module('heischwumm')
-    .controller('HomeController', HomeController);
-
-  HomeController.$inject = ['$timeout', 'AareService', 'SbbService', 'WeatherService'];
-  function HomeController($timeout, AareService, SbbService, WeatherService) {
-    var vm = this;
-
-    var timeTillReload = 300;
-    var counterSpeed = 1000;
-
-    vm.timer = 0;
-    vm.date = null;
-    vm.aare = null;
-    vm.thun = null;
-    vm.muri = null;
-    vm.weather = null;
-    vm.title = 'Home';
-    vm.loaded = {};
-    vm.loaded.aare = false;
-    vm.loaded.thun = false;
-    vm.loaded.muri = false;
-    vm.loaded.weather = false;
-    vm.init = init;
-    vm.getDelayString = getDelayString;
-    vm.getTimeCounter = getTimeCounter;
-    vm.getDate = getDate;
-    vm.reload = reload;
-
-    init();
-    counter();
-
-    function init() {
-      vm.date = new Date();
-      getAareData();
-      getWeatherData();
-      getSbbData();
-    }
-
-    function counter() {
-      vm.timer++;
-      if(vm.timer > timeTillReload) {
+System.register([], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    function HomeController($timeout, AareService, SbbService, WeatherService) {
+        var vm = this;
+        var timeTillReload = 10;
+        var counterSpeed = 1000;
         vm.timer = 0;
-        vm.date = new Date();
+        vm.date = null;
+        vm.aare = null;
+        vm.thun = null;
+        vm.muri = null;
+        vm.weather = null;
+        vm.title = 'Home';
+        vm.loaded = {};
+        vm.loaded.aare = false;
+        vm.loaded.thun = false;
+        vm.loaded.muri = false;
+        vm.loaded.weather = false;
+        vm.init = init;
+        vm.getDelayString = getDelayString;
+        vm.getTimeCounter = getTimeCounter;
+        vm.getDate = getDate;
+        vm.reload = reload;
         init();
-      } else {
-        $timeout(function() {
-          counter();
-        }, counterSpeed);
-      }
+        counter();
+        function init() {
+            vm.date = new Date();
+            getAareData();
+            getWeatherData();
+            getSbbData();
+        }
+        function counter() {
+            vm.timer++;
+            if (vm.timer > timeTillReload) {
+                vm.timer = 0;
+                vm.date = new Date();
+                init();
+                counter();
+            }
+            else {
+                $timeout(function () {
+                    counter();
+                }, counterSpeed);
+            }
+        }
+        function getDelayString(delay) {
+            if (delay) {
+                return '(+' + delay + ')';
+            }
+        }
+        function getAareData() {
+            vm.loaded.aare = false;
+            AareService.getCurrentInformation()
+                .success(function (data, status) {
+                vm.aare = data;
+            })
+                .error(function (data, status) {
+                console.error(data || 'Request failed');
+            })
+                .finally(function () {
+                vm.loaded.aare = true;
+            });
+        }
+        function getWeatherData() {
+            vm.loaded.weather = false;
+            WeatherService.getCurrentWeather()
+                .success(function (data, status) {
+                vm.weather = data;
+            })
+                .error(function (data, status) {
+                console.error(data || 'Request failed');
+            })
+                .finally(function () {
+                vm.loaded.weather = true;
+            });
+        }
+        function getSbbData() {
+            vm.loaded.thun = false;
+            SbbService.getCurrentConnection('Gümligen', 'Thun')
+                .success(function (data, status) {
+                vm.thun = data;
+            })
+                .error(function (data, status) {
+                console.error(data || 'Request failed');
+            })
+                .finally(function () {
+                vm.loaded.thun = true;
+            });
+            vm.loaded.muri = false;
+            SbbService.getCurrentConnection('Gümligen', 'Muri bei Bern')
+                .success(function (data, status) {
+                vm.muri = data;
+            })
+                .error(function (data, status) {
+                console.error(data || 'Request failed');
+            })
+                .finally(function () {
+                vm.loaded.muri = true;
+            });
+        }
+        function getTimeCounter() {
+            return Math.floor((timeTillReload - vm.timer) / 60) + ':' + (timeTillReload - vm.timer) % 60;
+        }
+        function getDate(date) {
+            return new Date(date);
+        }
+        function reload() {
+            vm.timer = 0;
+            vm.date = new Date();
+            init();
+        }
     }
-
-    function getDelayString(delay) {
-      if(delay) {
-        return '(+' + delay + ')';
-      }
+    return {
+        setters:[],
+        execute: function() {
+            HomeController.$inject = ['$timeout', 'AareService', 'SbbService', 'WeatherService'];
+            exports_1("default",HomeController);
+        }
     }
-
-    function getAareData() {
-      vm.loaded.aare = false;
-      AareService.getCurrentInformation()
-        .success(function(data, status) {
-          vm.aare = data;
-        })
-        .error(function(data, status) {
-          console.error(data || 'Request failed');
-        })
-        .finally(function() {
-          vm.loaded.aare = true;
-        });
-    }
-
-    function getWeatherData() {
-      vm.loaded.weather = false;
-      WeatherService.getCurrentWeather()
-        .success(function(data, status) {
-          vm.weather = data;
-        })
-        .error(function(data, status) {
-          console.error(data || 'Request failed');
-        })
-        .finally(function() {
-          vm.loaded.weather = true;
-        });
-    }
-
-    function getSbbData() {
-      vm.loaded.thun = false;
-      SbbService.getCurrentConnection('Gümligen', 'Thun')
-        .success(function(data, status) {
-          vm.thun = data;
-        })
-        .error(function(data, status) {
-          console.error(data || 'Request failed');
-        })
-        .finally(function() {
-          vm.loaded.thun = true;
-        });
-
-      vm.loaded.muri = false;
-      SbbService.getCurrentConnection('Gümligen', 'Muri bei Bern')
-        .success(function(data, status) {
-          vm.muri = data;
-        })
-        .error(function(data, status) {
-          console.error(data || 'Request failed');
-        })
-        .finally(function() {
-          vm.loaded.muri = true;
-        });
-    }
-
-    function getTimeCounter() {
-      return Math.floor((timeTillReload - vm.timer) / 60) + ':' + (timeTillReload - vm.timer) % 60;
-    }
-
-    function getDate(date) {
-      return new Date(date);
-    }
-
-    function reload() {
-      vm.timer = 0;
-      vm.date = new Date();
-      init();
-    }
-  }
-})();
+});
+//# sourceMappingURL=home.controller.js.map

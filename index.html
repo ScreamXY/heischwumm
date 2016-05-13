@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="heischwumm">
+<html class="no-js">
 
 <head>
   <meta charset="utf-8">
@@ -22,6 +22,7 @@
 
 
   <!-- Load libraries -->
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
   <script src="node_modules/angular/angular.js"></script>
   <script src="node_modules/angular-route/angular-route.js"></script>
   <script src="node_modules/angular-animate/angular-animate.js"></script>
@@ -29,15 +30,17 @@
   <script src="node_modules/angular-material/angular-material.js"></script>
 
   <!-- Load scripts -->
-  <script src="app/app.module.js"></script>
-  <script src="app/app.config.js"></script>
-  <script src="app/app.routes.js"></script>
-  <script src="app/home/home.controller.js"></script>
-  <script src="app/sbb/sbb.controller.js"></script>
-  <script src="app/sbb/connection.directive.js"></script>
-  <script src="app/services/aare.service.js"></script>
-  <script src="app/services/sbb.service.js"></script>
-  <script src="app/services/weather.service.js"></script>
+  <script>
+    System.config({
+      packages: {
+        app: {
+          format: 'register',
+          defaultExtension: 'js'
+        }
+      }
+    });
+    System.import('app/app.module');
+  </script>
 </body>
 
 </html>
