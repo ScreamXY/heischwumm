@@ -28,16 +28,17 @@
 
   <div class="board-column board-column-right">
     <div class="container weather">
-      <h3>Luft {{ weather()?.name }}</h3>
-      <h4>{{ weather()?.description }}</h4>
-      @if (weather()?.icon; as icon) {
+      @let weatherInfo = weather.hasValue() ? weather.value() : null;
+      <h3>Luft {{ weatherInfo?.name }}</h3>
+      <h4>{{ weatherInfo?.description }}</h4>
+      @if (weatherInfo?.icon; as icon) {
         <img
           class="weather-icon"
           [src]="'images/' + icon + '.svg'"
-          [alt]="weather()?.description"
+          [alt]="weatherInfo?.description"
         />
       }
-      @if (weatherLoading()) {
+      @if (weather.isLoading()) {
         <app-progress-spinner [diameter]="80" />
       } @else {
         <div class="data-row">
@@ -52,14 +53,14 @@
             <div>Wind:</div>
           </div>
           <div class="data-values">
-            <div>{{ weather()?.sunrise | date: 'HH:mm' }}</div>
-            <div>{{ weather()?.sunset | date: 'HH:mm' }}</div>
-            <div>{{ weather()?.temperature }}°C</div>
-            <div>{{ weather()?.temperatureMax }}°C</div>
-            <div>{{ weather()?.temperatureMin }}°C</div>
-            <div>{{ weather()?.pressure }} hPa</div>
-            <div>{{ weather()?.humidity }}%</div>
-            <div>{{ weather()?.windSpeed }} km/h</div>
+            <div>{{ weatherInfo?.sunrise | date: 'HH:mm' }}</div>
+            <div>{{ weatherInfo?.sunset | date: 'HH:mm' }}</div>
+            <div>{{ weatherInfo?.temperature }}°C</div>
+            <div>{{ weatherInfo?.temperatureMax }}°C</div>
+            <div>{{ weatherInfo?.temperatureMin }}°C</div>
+            <div>{{ weatherInfo?.pressure }} hPa</div>
+            <div>{{ weatherInfo?.humidity }}%</div>
+            <div>{{ weatherInfo?.windSpeed }} km/h</div>
           </div>
         </div>
       }
@@ -74,6 +75,7 @@
       @if (aare.isLoading()) {
         <app-progress-spinner [diameter]="80" />
       } @else if (aare.hasValue()) {
+        @let aareInfo = aare.value();
         <div class="data-row">
           <div class="data-labels">
             <div>Datum:</div>
@@ -82,10 +84,10 @@
             <div>Wassermenge:</div>
           </div>
           <div class="data-values">
-            <div>{{ aare.value().timestamp | date: 'dd.MM.yyyy' }}</div>
-            <div>{{ aare.value().timestamp | date: 'HH:mm' }}</div>
-            <div>{{ aare.value().temperature }}°C</div>
-            <div>{{ aare.value().flow }} m<sup>3</sup>/s</div>
+            <div>{{ aareInfo.timestamp | date: 'dd.MM.yyyy' }}</div>
+            <div>{{ aareInfo.timestamp | date: 'HH:mm' }}</div>
+            <div>{{ aareInfo.temperature }}°C</div>
+            <div>{{ aareInfo.flow }} m<sup>3</sup>/s</div>
           </div>
         </div>
       }

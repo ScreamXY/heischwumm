@@ -3,11 +3,9 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { WeatherService } from './weather.service';
+import { FORECAST_URL, OpenMeteoResponse, WeatherService } from './weather.service';
 
-const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
-
-const FORECAST_RESPONSE = {
+const FORECAST_RESPONSE: OpenMeteoResponse = {
   current: {
     temperature_2m: 14.27,
     relative_humidity_2m: 78,
@@ -43,7 +41,7 @@ describe('WeatherService', () => {
   it('requests the Open-Meteo forecast for Bern and maps it to the weather view', async () => {
     TestBed.tick();
 
-    expect(service.loading()).toBe(true);
+    expect(service.weather.isLoading()).toBe(true);
 
     const request = httpMock.expectOne((req) => req.url === FORECAST_URL);
     expect(request.request.method).toBe('GET');
@@ -57,8 +55,8 @@ describe('WeatherService', () => {
     request.flush(FORECAST_RESPONSE);
     await TestBed.inject(ApplicationRef).whenStable();
 
-    expect(service.loading()).toBe(false);
-    expect(service.weather()).toEqual({
+    expect(service.weather.isLoading()).toBe(false);
+    expect(service.weather.value()).toEqual({
       name: 'Bern',
       description: 'Leichter Regen',
       icon: '10d',
@@ -83,8 +81,8 @@ describe('WeatherService', () => {
       });
     await TestBed.inject(ApplicationRef).whenStable();
 
-    expect(service.weather()?.icon).toBe('01n');
-    expect(service.weather()?.description).toBe('Klarer Himmel');
+    expect(service.weather.value()?.icon).toBe('01n');
+    expect(service.weather.value()?.description).toBe('Klarer Himmel');
   });
 
   it('maps unknown weather codes and missing values to empty/null', async () => {
@@ -97,7 +95,7 @@ describe('WeatherService', () => {
       });
     await TestBed.inject(ApplicationRef).whenStable();
 
-    expect(service.weather()).toEqual({
+    expect(service.weather.value()).toEqual({
       name: 'Bern',
       description: '',
       icon: null,
@@ -112,7 +110,7 @@ describe('WeatherService', () => {
     });
   });
 
-  it('returns null while the forecast has not been loaded', async () => {
+  it('has no value when the forecast request fails', async () => {
     TestBed.tick();
 
     httpMock
@@ -120,8 +118,8 @@ describe('WeatherService', () => {
       .flush('failed', { status: 500, statusText: 'Server Error' });
     await TestBed.inject(ApplicationRef).whenStable();
 
-    expect(service.weather()).toBeNull();
-    expect(service.loading()).toBe(false);
+    expect(service.weather.hasValue()).toBe(false);
+    expect(service.weather.isLoading()).toBe(false);
   });
 
   it('requests the forecast again on reload()', async () => {
@@ -130,12 +128,12 @@ describe('WeatherService', () => {
     httpMock.expectOne((req) => req.url === FORECAST_URL).flush(FORECAST_RESPONSE);
     await TestBed.inject(ApplicationRef).whenStable();
 
-    service.reload();
+    service.weather.reload();
     TestBed.tick();
 
     httpMock.expectOne((req) => req.url === FORECAST_URL).flush(FORECAST_RESPONSE);
     await TestBed.inject(ApplicationRef).whenStable();
 
-    expect(service.weather()).not.toBeNull();
+    expect(service.weather.hasValue()).toBe(true);
   });
 });

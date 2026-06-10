@@ -20,6 +20,26 @@ npm run format     # Prettier
 npm run build      # production build
 ```
 
+## Deployment
+
+The app is served by GitHub Pages at <https://screamxy.github.io>. Every push
+to `master` runs the [Deploy workflow](.github/workflows/deploy.yml), which
+lints, runs the unit and e2e tests, builds the app and pushes the build output
+to the [ScreamXY/screamxy.github.io](https://github.com/ScreamXY/screamxy.github.io)
+repo — no manual copying of `dist/` needed.
+
+One-time setup for the cross-repo push:
+
+```sh
+ssh-keygen -t ed25519 -C "heischwumm-deploy" -f deploy_key -N ""
+```
+
+- Add `deploy_key.pub` as a **deploy key with write access** on
+  `ScreamXY/screamxy.github.io` (Settings → Deploy keys).
+- Add the private `deploy_key` as the **`ACTIONS_DEPLOY_KEY` secret** on this
+  repo (Settings → Secrets and variables → Actions).
+- Delete both local key files afterwards.
+
 ## APIs
 
 | Data    | Source                                                  | Notes                                                                                                                                                                                                                                                                                                          |

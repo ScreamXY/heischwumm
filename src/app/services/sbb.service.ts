@@ -34,7 +34,7 @@ export interface SbbQuery {
   to: string;
 }
 
-const CONNECTIONS_URL = 'https://transport.opendata.ch/v1/connections';
+export const CONNECTIONS_URL = 'https://transport.opendata.ch/v1/connections';
 const CONNECTION_LIMIT = 2;
 const CONNECTION_PAGE = 0;
 

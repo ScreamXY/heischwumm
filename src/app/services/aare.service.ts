@@ -2,6 +2,7 @@ import { httpResource, HttpResourceRef } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { APP_ID, APP_VERSION } from '../app-info';
+import { epochSecondsToMilliseconds } from '../shared/time';
 
 // Aare.guru API (https://aareguru.existenz.ch/): every value can be null at any time.
 interface AareGuruResponse {
@@ -21,7 +22,7 @@ export interface AareInfo {
   flow: number | null;
 }
 
-const AARE_URL = 'https://aareguru.existenz.ch/v2018/current';
+export const AARE_URL = 'https://aareguru.existenz.ch/v2018/current';
 const CITY = 'bern';
 
 @Injectable({ providedIn: 'root' })
@@ -38,7 +39,7 @@ export class AareService {
 function toAareInfo(response: AareGuruResponse): AareInfo {
   const aare = response.aare;
   return {
-    timestamp: typeof aare?.timestamp === 'number' ? aare.timestamp * 1000 : null,
+    timestamp: epochSecondsToMilliseconds(aare?.timestamp),
     temperature: aare?.temperature ?? null,
     flow: aare?.flow ?? null,
   };

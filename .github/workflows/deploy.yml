@@ -1,0 +1,43 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Publishes the built app to the user-page repo, which GitHub Pages
+      # serves at https://screamxy.github.io. Requires the repo secret
+      # ACTIONS_DEPLOY_KEY: an SSH private key whose public half is registered
+      # as a write-access deploy key on ScreamXY/screamxy.github.io.
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: ScreamXY/screamxy.github.io
+          publish_branch: master
+          publish_dir: dist/heischwumm/browser

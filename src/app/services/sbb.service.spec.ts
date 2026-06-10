@@ -3,11 +3,9 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ApplicationRef, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { SbbQuery, SbbService } from './sbb.service';
+import { CONNECTIONS_URL, SbbConnectionsResponse, SbbQuery, SbbService } from './sbb.service';
 
-const CONNECTIONS_URL = 'https://transport.opendata.ch/v1/connections';
-
-const CONNECTIONS_RESPONSE = {
+const CONNECTIONS_RESPONSE: SbbConnectionsResponse = {
   connections: [
     {
       from: {

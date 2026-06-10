@@ -2,9 +2,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CONNECTIONS_URL } from '../services/sbb.service';
 import { Sbb } from './sbb';
-
-const CONNECTIONS_URL = 'https://transport.opendata.ch/v1/connections';
 
 describe('Sbb', () => {
   let fixture: ComponentFixture<Sbb>;

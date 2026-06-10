@@ -1,8 +1,8 @@
-@for (connection of connectionData()?.connections; track $index; let first = $first) {
+@for (connection of connections(); track $index; let first = $first) {
   <div class="connection">
     @if (first) {
       <div class="connection-header">
-        <div>{{ connection.from.station.name }} - {{ connection.to.station.name }}</div>
+        <div>{{ connection.fromStation }} - {{ connection.toStation }}</div>
       </div>
     }
     <div class="connection-details">
@@ -16,15 +16,15 @@
       }
       <div class="connection-row">
         <div class="cell-wide time">
-          {{ toDate(connection.from.departureTimestamp) | date: 'HH:mm'
-          }}<span class="delay"> {{ delayString(connection.from.delay) }}</span>
+          {{ connection.departure | date: 'HH:mm'
+          }}<span class="delay"> {{ connection.departureDelay }}</span>
         </div>
-        <div class="cell-narrow">{{ connection.from.platform }}</div>
+        <div class="cell-narrow">{{ connection.departurePlatform }}</div>
         <div class="cell-wide time">
-          {{ toDate(connection.to.arrivalTimestamp) | date: 'HH:mm'
-          }}<span class="delay"> {{ delayString(connection.to.delay) }}</span>
+          {{ connection.arrival | date: 'HH:mm'
+          }}<span class="delay"> {{ connection.arrivalDelay }}</span>
         </div>
-        <div class="cell-narrow">{{ connection.to.platform }}</div>
+        <div class="cell-narrow">{{ connection.arrivalPlatform }}</div>
       </div>
     </div>
   </div>

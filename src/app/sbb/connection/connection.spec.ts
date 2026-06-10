@@ -83,16 +83,34 @@ describe('Connection', () => {
     expect(text).toContain(time(1781091960));
   });
 
-  it('formats delays as (+n) and hides missing delays', () => {
-    const component = fixture.componentInstance;
-    expect(component.delayString(3)).toBe('(+3)');
-    expect(component.delayString(0)).toBe('');
-    expect(component.delayString(null)).toBe('');
+  it('maps connections to a view with epoch milliseconds and delay strings', () => {
+    fixture.componentRef.setInput('connectionData', CONNECTIONS);
+
+    expect(fixture.componentInstance.connections()).toEqual([
+      {
+        fromStation: 'Gümligen',
+        toStation: 'Thun',
+        departure: 1781088960000,
+        departureDelay: '(+1)',
+        departurePlatform: '1',
+        arrival: 1781090280000,
+        arrivalDelay: '',
+        arrivalPlatform: '4',
+      },
+      {
+        fromStation: 'Gümligen',
+        toStation: 'Thun',
+        departure: 1781090700000,
+        departureDelay: '',
+        departurePlatform: '1',
+        arrival: 1781091960000,
+        arrivalDelay: '',
+        arrivalPlatform: '4',
+      },
+    ]);
   });
 
-  it('converts epoch seconds to dates and keeps null', () => {
-    const component = fixture.componentInstance;
-    expect(component.toDate(1781088960)?.getTime()).toBe(1781088960000);
-    expect(component.toDate(null)).toBeNull();
+  it('maps missing connection data to an empty list', () => {
+    expect(fixture.componentInstance.connections()).toEqual([]);
   });
 });

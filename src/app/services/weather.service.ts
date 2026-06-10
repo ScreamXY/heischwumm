@@ -1,11 +1,13 @@
-import { httpResource } from '@angular/common/http';
-import { computed, Injectable, Signal } from '@angular/core';
+import { httpResource, HttpResourceRef } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { epochSecondsToMilliseconds } from '../shared/time';
 
 // Open-Meteo forecast API (https://open-meteo.com/): free for non-commercial
 // use, no API key required. For Switzerland the data comes from MeteoSwiss'
 // ICON-CH weather models. The data is CC BY 4.0, so the weather card links
 // back to open-meteo.com.
-interface OpenMeteoResponse {
+export interface OpenMeteoResponse {
   current?: {
     temperature_2m?: number | null;
     relative_humidity_2m?: number | null;
@@ -41,7 +43,7 @@ export interface WeatherInfo {
   windSpeed: number | null;
 }
 
-const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
+export const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 const CITY_NAME = 'Bern';
 const BERN = { latitude: 46.9481, longitude: 7.4474 };
 
@@ -111,29 +113,22 @@ const WEATHER_ICONS: Record<number, string> = {
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
-  private readonly forecast = httpResource<OpenMeteoResponse>(() => ({
-    url: FORECAST_URL,
-    params: {
-      latitude: BERN.latitude,
-      longitude: BERN.longitude,
-      current:
-        'temperature_2m,relative_humidity_2m,pressure_msl,wind_speed_10m,weather_code,is_day',
-      daily: 'temperature_2m_max,temperature_2m_min,sunrise,sunset',
-      timezone: 'Europe/Zurich',
-      timeformat: 'unixtime',
-      forecast_days: 1,
-    },
-  }));
-
-  public readonly weather: Signal<WeatherInfo | null> = computed(() =>
-    this.forecast.hasValue() ? toWeatherInfo(this.forecast.value()) : null,
+  public readonly weather: HttpResourceRef<WeatherInfo | undefined> = httpResource<WeatherInfo>(
+    () => ({
+      url: FORECAST_URL,
+      params: {
+        latitude: BERN.latitude,
+        longitude: BERN.longitude,
+        current:
+          'temperature_2m,relative_humidity_2m,pressure_msl,wind_speed_10m,weather_code,is_day',
+        daily: 'temperature_2m_max,temperature_2m_min,sunrise,sunset',
+        timezone: 'Europe/Zurich',
+        timeformat: 'unixtime',
+        forecast_days: 1,
+      },
+    }),
+    { parse: (raw) => toWeatherInfo(raw as OpenMeteoResponse) },
   );
-
-  public readonly loading: Signal<boolean> = computed(() => this.forecast.isLoading());
-
-  public reload(): void {
-    this.forecast.reload();
-  }
 }
 
 function toWeatherInfo(response: OpenMeteoResponse): WeatherInfo {
@@ -146,8 +141,8 @@ function toWeatherInfo(response: OpenMeteoResponse): WeatherInfo {
     name: CITY_NAME,
     description: typeof code === 'number' ? (WEATHER_DESCRIPTIONS[code] ?? '') : '',
     icon: icon === null ? null : `${icon}${dayNightSuffix}`,
-    sunrise: toMilliseconds(daily?.sunrise?.[0]),
-    sunset: toMilliseconds(daily?.sunset?.[0]),
+    sunrise: epochSecondsToMilliseconds(daily?.sunrise?.[0]),
+    sunset: epochSecondsToMilliseconds(daily?.sunset?.[0]),
     temperature: current?.temperature_2m ?? null,
     temperatureMax: daily?.temperature_2m_max?.[0] ?? null,
     temperatureMin: daily?.temperature_2m_min?.[0] ?? null,
@@ -155,11 +150,4 @@ function toWeatherInfo(response: OpenMeteoResponse): WeatherInfo {
     humidity: current?.relative_humidity_2m ?? null,
     windSpeed: current?.wind_speed_10m ?? null,
   };
-}
-
-function toMilliseconds(epochSeconds: number | null | undefined): number | null {
-  if (typeof epochSeconds !== 'number') {
-    return null;
-  }
-  return epochSeconds * 1000;
 }

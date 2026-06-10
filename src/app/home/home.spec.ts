@@ -2,13 +2,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { AARE_URL } from '../services/aare.service';
+import { CONNECTIONS_URL, SbbConnectionsResponse } from '../services/sbb.service';
+import { FORECAST_URL } from '../services/weather.service';
 import { Home } from './home';
 
-const AARE_URL = 'https://aareguru.existenz.ch/v2018/current';
-const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
-const CONNECTIONS_URL = 'https://transport.opendata.ch/v1/connections';
-
-function connectionsResponse(to: string) {
+function connectionsResponse(to: string): SbbConnectionsResponse {
   return {
     connections: [
       {

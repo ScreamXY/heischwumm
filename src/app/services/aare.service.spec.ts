@@ -4,7 +4,7 @@ import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { APP_ID, APP_VERSION } from '../app-info';
-import { AareService } from './aare.service';
+import { AARE_URL, AareService } from './aare.service';
 
 describe('AareService', () => {
   let httpMock: HttpTestingController;
@@ -25,9 +25,7 @@ describe('AareService', () => {
   it('requests the current data from Aare.guru with the required app identification', async () => {
     TestBed.tick();
 
-    const request = httpMock.expectOne(
-      (req) => req.url === 'https://aareguru.existenz.ch/v2018/current',
-    );
+    const request = httpMock.expectOne((req) => req.url === AARE_URL);
     expect(request.request.method).toBe('GET');
     expect(request.request.params.get('city')).toBe('bern');
     expect(request.request.params.get('app')).toBe(APP_ID);
@@ -46,9 +44,7 @@ describe('AareService', () => {
   it('maps missing values to null because every Aare.guru value can be null', async () => {
     TestBed.tick();
 
-    const request = httpMock.expectOne(
-      (req) => req.url === 'https://aareguru.existenz.ch/v2018/current',
-    );
+    const request = httpMock.expectOne((req) => req.url === AARE_URL);
     request.flush({});
     await TestBed.inject(ApplicationRef).whenStable();
 

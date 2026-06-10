@@ -26,7 +26,6 @@ export class Home {
 
   public readonly aare = this.aareService.current;
   public readonly weather = this.weatherService.weather;
-  public readonly weatherLoading = this.weatherService.loading;
   public readonly thun = this.sbbService.connections(() => ({ from: 'Gümligen', to: 'Thun' }));
   public readonly muri = this.sbbService.connections(() => ({
     from: 'Gümligen',
@@ -51,7 +50,7 @@ export class Home {
   public reload(): void {
     this.secondsElapsed.set(0);
     this.aare.reload();
-    this.weatherService.reload();
+    this.weather.reload();
     this.thun.reload();
     this.muri.reload();
   }
