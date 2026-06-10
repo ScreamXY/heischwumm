@@ -20,12 +20,15 @@ npm run format     # Prettier
 npm run build      # production build
 ```
 
-## Deployment
+## CI & Deployment
+
+The [CI workflow](.github/workflows/ci.yml) typechecks (`tsc -b`), lints,
+runs the unit and e2e tests and builds on every push and pull request.
 
 The app is served by GitHub Pages at <https://screamxy.github.io>. Every push
-to `master` runs the [Deploy workflow](.github/workflows/deploy.yml), which
-lints, runs the unit and e2e tests, builds the app and pushes the build output
-to the [ScreamXY/screamxy.github.io](https://github.com/ScreamXY/screamxy.github.io)
+to `master` also runs the [Deploy workflow](.github/workflows/deploy.yml),
+which builds the app and pushes the build output to the
+[ScreamXY/screamxy.github.io](https://github.com/ScreamXY/screamxy.github.io)
 repo — no manual copying of `dist/` needed.
 
 One-time setup for the cross-repo push:

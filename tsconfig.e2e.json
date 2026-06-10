@@ -1,7 +1,10 @@
+/* Type-checks the Playwright end-to-end specs and config (Playwright itself
+   only strips types, so without this project the e2e code is never checked). */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/e2e",
+    "rootDir": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
     "types": ["node"]
