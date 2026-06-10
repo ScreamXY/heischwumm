@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sbb-page {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
+  overflow: auto;
+  padding: 16px;
+}

@@ -1,0 +1,43 @@
+// Base styles formerly provided by angular-material.css (only the subset this
+// app relied on: typography and the html/body reset).
+html,
+body {
+  height: 100%;
+  color: rgba(0, 0, 0, 0.87);
+  background: white;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+h2 {
+  font-size: 2em;
+  margin: 0;
+}
+
+h3 {
+  font-size: 1.67em;
+  margin: 0;
+}

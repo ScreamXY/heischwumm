@@ -1,0 +1,165 @@
+// The flex values mirror the AngularJS Material layout attributes the
+// original app used, so the rendering is identical.
+:host {
+  display: block;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100px;
+}
+
+.title {
+  padding-top: 16px;
+  margin: 0 auto;
+}
+
+// A native button restyled to look exactly like the h3 heading it replaced.
+.refresh {
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 1.67em;
+  font-weight: bold;
+  color: inherit;
+  cursor: pointer;
+}
+
+.board {
+  display: flex;
+  box-sizing: border-box;
+  height: calc(100vh - 100px);
+}
+
+.board-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 50%;
+  max-width: 50%;
+  max-height: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  height: 100%;
+}
+
+.board-column-right {
+  position: relative;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: white;
+  opacity: 0.7;
+  width: 300px;
+  padding: 16px;
+}
+
+.sbb {
+  align-self: center;
+}
+
+.sbb-thun {
+  margin-bottom: 50px;
+}
+
+.weather {
+  align-self: center;
+}
+
+.weather-icon {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: 60%;
+  top: 30px;
+}
+
+.aare {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.data-row {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.data-labels {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 60%;
+  max-width: 60%;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+
+.data-values {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 40%;
+  max-width: 40%;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+
+.attribution {
+  margin-top: 8px;
+  font-size: 11px;
+
+  a {
+    color: #074976;
+  }
+}
+
+.line-upper {
+  position: absolute;
+  left: 14%;
+  top: 0;
+  height: 116px;
+  border-left: 5px solid #074976;
+}
+
+.line-dot-upper {
+  position: absolute;
+  left: calc(14% - 18px);
+  top: 116px;
+  border-radius: 50%;
+  background-color: #074976;
+  width: 40px;
+  height: 40px;
+}
+
+.line-middle {
+  position: absolute;
+  left: 14%;
+  top: 147px;
+  height: 155px;
+  border-left: 5px dotted #074976;
+}
+
+.line-dot-lower {
+  position: absolute;
+  left: calc(14% - 18px);
+  top: 304px;
+  border-radius: 50%;
+  background-color: #074976;
+  width: 40px;
+  height: 40px;
+}
+
+.line-lower {
+  position: absolute;
+  left: 14%;
+  top: 343px;
+  height: calc(100vh - 343px);
+  border-left: 5px solid #074976;
+}

@@ -1,0 +1,14 @@
+<div class="sbb-page">
+  <input type="text" [(ngModel)]="from" placeholder="Von" />
+  <input type="text" [(ngModel)]="to" placeholder="Nach" />
+
+  @if (from() && to()) {
+    <h2>{{ from() }} - {{ to() }}</h2>
+  }
+
+  @if (connections.isLoading()) {
+    <app-progress-spinner [diameter]="150" />
+  } @else if (connections.hasValue()) {
+    <app-connection [connectionData]="connections.value()" />
+  }
+</div>

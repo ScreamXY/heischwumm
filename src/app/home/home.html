@@ -1,0 +1,107 @@
+<div class="header">
+  <h1 class="title">Heischwumm</h1>
+  <button class="refresh" type="button" (click)="reload()">
+    <i class="material-icons">autorenew</i>
+    {{ timeCounter() }}
+  </button>
+</div>
+<div class="board">
+  <div class="board-column">
+    <div class="container sbb sbb-thun">
+      <h3>Thun</h3>
+      @if (thun.isLoading()) {
+        <app-progress-spinner [diameter]="80" />
+      } @else if (thun.hasValue()) {
+        <app-connection [connectionData]="thun.value()" />
+      }
+    </div>
+
+    <div class="container sbb">
+      <h3>Muri</h3>
+      @if (muri.isLoading()) {
+        <app-progress-spinner [diameter]="80" />
+      } @else if (muri.hasValue()) {
+        <app-connection [connectionData]="muri.value()" />
+      }
+    </div>
+  </div>
+
+  <div class="board-column board-column-right">
+    <div class="container weather">
+      <h3>Luft {{ weather()?.name }}</h3>
+      <h4>{{ weather()?.description }}</h4>
+      @if (weather()?.icon; as icon) {
+        <img
+          class="weather-icon"
+          [src]="'images/' + icon + '.svg'"
+          [alt]="weather()?.description"
+        />
+      }
+      @if (weatherLoading()) {
+        <app-progress-spinner [diameter]="80" />
+      } @else {
+        <div class="data-row">
+          <div class="data-labels">
+            <div>Sonnenaufgang:</div>
+            <div>Sonnenuntergang:</div>
+            <div>Temperatur:</div>
+            <div>Temperatur (max):</div>
+            <div>Temperatur (min):</div>
+            <div>Luftdruck:</div>
+            <div>Feuchtigkeit:</div>
+            <div>Wind:</div>
+          </div>
+          <div class="data-values">
+            <div>{{ weather()?.sunrise | date: 'HH:mm' }}</div>
+            <div>{{ weather()?.sunset | date: 'HH:mm' }}</div>
+            <div>{{ weather()?.temperature }}°C</div>
+            <div>{{ weather()?.temperatureMax }}°C</div>
+            <div>{{ weather()?.temperatureMin }}°C</div>
+            <div>{{ weather()?.pressure }} hPa</div>
+            <div>{{ weather()?.humidity }}%</div>
+            <div>{{ weather()?.windSpeed }} km/h</div>
+          </div>
+        </div>
+      }
+      <div class="attribution">
+        Daten:
+        <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+      </div>
+    </div>
+
+    <div class="container aare">
+      <h3>Wasser Aare</h3>
+      @if (aare.isLoading()) {
+        <app-progress-spinner [diameter]="80" />
+      } @else if (aare.hasValue()) {
+        <div class="data-row">
+          <div class="data-labels">
+            <div>Datum:</div>
+            <div>Zeit:</div>
+            <div>Temperatur:</div>
+            <div>Wassermenge:</div>
+          </div>
+          <div class="data-values">
+            <div>{{ aare.value().timestamp | date: 'dd.MM.yyyy' }}</div>
+            <div>{{ aare.value().timestamp | date: 'HH:mm' }}</div>
+            <div>{{ aare.value().temperature }}°C</div>
+            <div>{{ aare.value().flow }} m<sup>3</sup>/s</div>
+          </div>
+        </div>
+      }
+      <div class="attribution">
+        Daten:
+        <a href="https://aare.guru" target="_blank" rel="noopener">Aare.guru</a>
+        ·
+        <a href="https://www.hydrodaten.admin.ch" target="_blank" rel="noopener">BAFU</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="line-upper"></div>
+  <div class="line-dot-upper"></div>
+  <div class="line-middle"></div>
+  <div class="line-dot-lower"></div>
+  <div class="line-lower"></div>
+</div>
