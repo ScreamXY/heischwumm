@@ -8,7 +8,7 @@ standalone components, signals and `httpResource` — the design is unchanged.
 
 ## Development
 
-Requires Node 24 (see `.nvmrc`).
+Requires Node 26 (see `.nvmrc`).
 
 ```sh
 npm install
