@@ -25,23 +25,13 @@ npm run build      # production build
 The [CI workflow](.github/workflows/ci.yml) typechecks (`tsc -b`), lints,
 runs the unit and e2e tests and builds on every push and pull request.
 
-The app is served by GitHub Pages at <https://screamxy.github.io>. Every push
-to `master` also runs the [Deploy workflow](.github/workflows/deploy.yml),
-which builds the app and pushes the build output to the
-[ScreamXY/screamxy.github.io](https://github.com/ScreamXY/screamxy.github.io)
-repo — no manual copying of `dist/` needed.
-
-One-time setup for the cross-repo push:
-
-```sh
-ssh-keygen -t ed25519 -C "heischwumm-deploy" -f deploy_key -N ""
-```
-
-- Add `deploy_key.pub` as a **deploy key with write access** on
-  `ScreamXY/screamxy.github.io` (Settings → Deploy keys).
-- Add the private `deploy_key` as the **`ACTIONS_DEPLOY_KEY` secret** on this
-  repo (Settings → Secrets and variables → Actions).
-- Delete both local key files afterwards.
+The [Deploy workflow](.github/workflows/deploy.yml) publishes every push to
+`master` through this repo's GitHub Pages (source: GitHub Actions) at
+<https://screamxy.github.io/heischwumm/>. The root of
+<https://screamxy.github.io> is the ScreamXY portal
+([ScreamXY/screamxy.github.io](https://github.com/ScreamXY/screamxy.github.io)),
+which links here and hosts the support and privacy pages; it also redirects
+old `screamxy.github.io/#/sbb` bookmarks.
 
 ## APIs
 
