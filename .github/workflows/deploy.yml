@@ -31,16 +31,8 @@ jobs:
         run: npm ci
 
       - name: Build for GitHub Pages
-        # Project site served from https://screamxy.github.io/heischwumm/.
-        # The root of screamxy.github.io is the ScreamXY portal
-        # (ScreamXY/screamxy.github.io), which links here.
+        # Project site served from https://screamxy.github.io/heischwumm/
         run: npm run build -- --base-href /heischwumm/
-
-      - name: Add SPA fallback
-        # The app uses hash routing, so deep links never reach the server, but
-        # GitHub Pages serves 404.html for unknown paths; the app shell there
-        # keeps mistyped URLs inside the app.
-        run: cp dist/heischwumm/browser/index.html dist/heischwumm/browser/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
