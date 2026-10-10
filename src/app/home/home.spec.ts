@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AARE_URL } from '../services/aare.service';
 import { CONNECTIONS_URL, SbbConnectionsResponse } from '../services/sbb.service';
 import { FORECAST_URL } from '../services/weather.service';
-import { Home } from './home';
+import { Home, LEGAL_LINKS } from './home';
 
 function connectionsResponse(to: string): SbbConnectionsResponse {
   return {
@@ -138,10 +138,31 @@ describe('Home', () => {
       ),
     );
 
-    expect(links.map((link) => link.href)).toEqual([
-      'https://aare.guru/',
-      'https://www.hydrodaten.admin.ch/',
-    ]);
+    const hrefs = links.map((link) => link.href);
+    expect(hrefs).toContain('https://aare.guru/');
+    expect(hrefs).toContain('https://www.hydrodaten.admin.ch/');
+  });
+
+  it('links to the privacy policy and the imprint from the Aare attribution line', () => {
+    fixture.detectChanges();
+    const links = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>(
+        '.aare .attribution a',
+      ),
+    );
+    const byLabel = (label: string): HTMLAnchorElement | null =>
+      links.find((link) => link.textContent?.trim() === label) ?? null;
+    const privacy = byLabel('Datenschutz');
+    const imprint = byLabel('Impressum');
+
+    expect(privacy?.getAttribute('href')).toBe(
+      'https://screamxy.github.io/apps/heischwumm/privacy/',
+    );
+    expect(privacy?.getAttribute('href')).toBe(LEGAL_LINKS.privacy);
+    expect(privacy?.getAttribute('target')).toBeNull();
+    expect(imprint?.getAttribute('href')).toBe('https://screamxy.github.io/legal/');
+    expect(imprint?.getAttribute('href')).toBe(LEGAL_LINKS.imprint);
+    expect(imprint?.getAttribute('target')).toBeNull();
   });
 
   it('links to Open-Meteo as required by their CC BY 4.0 license', () => {
