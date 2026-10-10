@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -7,15 +7,17 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 # Allow only one deployment at a time; let an in-flight production deployment
 # finish rather than cancelling it mid-flight.
 concurrency:
-  group: deploy
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -28,17 +30,33 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build for GitHub Pages
+        # Project site served from https://screamxy.github.io/heischwumm/.
+        # The root of screamxy.github.io is the ScreamXY portal
+        # (ScreamXY/screamxy.github.io), which links here.
+        run: npm run build -- --base-href /heischwumm/
 
-      # Publishes the built app to the user-page repo, which GitHub Pages
-      # serves at https://screamxy.github.io. Requires the repo secret
-      # ACTIONS_DEPLOY_KEY: an SSH private key whose public half is registered
-      # as a write-access deploy key on ScreamXY/screamxy.github.io.
-      - name: Publish to screamxy.github.io
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Add SPA fallback
+        # The app uses hash routing, so deep links never reach the server, but
+        # GitHub Pages serves 404.html for unknown paths; the app shell there
+        # keeps mistyped URLs inside the app.
+        run: cp dist/heischwumm/browser/index.html dist/heischwumm/browser/404.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          external_repository: ScreamXY/screamxy.github.io
-          publish_branch: master
-          publish_dir: dist/heischwumm/browser
+          path: dist/heischwumm/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
