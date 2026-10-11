@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A swimmer in the Aare, in the app's colours: the sky gradient of the
+       background, the wave of wave.png and the navy of the SBB timeline. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cbfafe" />
+      <stop offset="1" stop-color="#fff" />
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00e2f9" />
+      <stop offset="1" stop-color="#00a8d2" />
+    </linearGradient>
+    <clipPath id="tile">
+      <rect width="64" height="64" rx="14" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="64" height="64" fill="url(#sky)" />
+    <path
+      d="M35 42 L23 15 L8 36"
+      fill="none"
+      stroke="#074976"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <circle cx="45" cy="30" r="9.5" fill="#074976" />
+    <path
+      d="M-2 39 Q14 30 30 37 T62 36 T94 36 V72 H-2 Z"
+      fill="url(#water)"
+      stroke="#fff"
+      stroke-width="2.5"
+    />
+  </g>
+</svg>
