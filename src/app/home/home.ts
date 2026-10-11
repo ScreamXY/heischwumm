@@ -9,6 +9,12 @@ import { SbbService } from '../services/sbb.service';
 import { WeatherService } from '../services/weather.service';
 import { ProgressSpinner } from '../shared/progress-spinner/progress-spinner';
 
+/** Legal pages hosted on the ScreamXY portal; linked from the Aare attribution line. */
+export const LEGAL_LINKS = {
+  privacy: 'https://screamxy.github.io/apps/heischwumm/privacy/',
+  imprint: 'https://screamxy.github.io/legal/',
+} as const;
+
 const RELOAD_INTERVAL_SECONDS = 300;
 const TICK_INTERVAL_MS = 1000;
 
@@ -31,6 +37,8 @@ export class Home {
     from: 'Gümligen',
     to: 'Muri bei Bern',
   }));
+
+  public readonly legalLinks = LEGAL_LINKS;
 
   private readonly secondsElapsed = signal(0);
 
