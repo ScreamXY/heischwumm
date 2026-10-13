@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
+    paths-ignore: ['README.md', 'AGENTS.md', 'CLAUDE.md', 'SECURITY.md', 'docs/**', 'AppStore/**', 'Measurements/**']
   workflow_dispatch:
 
 permissions:
@@ -18,6 +19,7 @@ concurrency:
 
 jobs:
   build:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -28,6 +30,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        timeout-minutes: 4
         run: npm ci
 
       - name: Build for GitHub Pages
@@ -43,6 +46,7 @@ jobs:
           path: dist/heischwumm/browser
 
   deploy:
+    timeout-minutes: 5
     needs: build
     runs-on: ubuntu-latest
     environment:
