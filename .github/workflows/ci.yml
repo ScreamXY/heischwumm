@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths-ignore: ['README.md', 'AGENTS.md', 'CLAUDE.md', 'SECURITY.md', 'docs/**', 'AppStore/**', 'Measurements/**']
   pull_request:
     paths-ignore: ['README.md', 'AGENTS.md', 'CLAUDE.md', 'SECURITY.md', 'docs/**', 'AppStore/**', 'Measurements/**']

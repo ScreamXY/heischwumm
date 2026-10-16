@@ -26,7 +26,7 @@ The [CI workflow](.github/workflows/ci.yml) typechecks (`tsc -b`), lints,
 runs the unit and e2e tests and builds on every push and pull request.
 
 The [Deploy workflow](.github/workflows/deploy.yml) publishes every push to
-`master` through this repo's GitHub Pages (source: GitHub Actions) at
+`main` through this repo's GitHub Pages (source: GitHub Actions) at
 <https://screamxy.github.io/heischwumm/>. The root of
 <https://screamxy.github.io> is the ScreamXY portal
 ([ScreamXY/screamxy.github.io](https://github.com/ScreamXY/screamxy.github.io)),
