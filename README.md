@@ -10,6 +10,9 @@ standalone components, signals and `httpResource` — the design is unchanged.
 
 Requires Node 26 (see `.nvmrc`).
 
+The Vite override keeps the dev server on the patched 8.3 line. Remove it once
+`@angular/build` requires Vite 8.3.3 or newer.
+
 ```sh
 npm install
 npm start          # dev server on http://localhost:4200
