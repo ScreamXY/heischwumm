@@ -2,10 +2,28 @@ name: CI
 
 on:
   push:
+    # Only confirmed non-inputs are excluded; shipped content and unknown paths run.
+    paths-ignore:
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'SECURITY.md'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE*'
+      - '.github/CODEOWNERS'
+      - '.vscode/**'
     branches: [main]
-    paths-ignore: ['README.md', 'AGENTS.md', 'CLAUDE.md', 'SECURITY.md', 'docs/**', 'AppStore/**', 'Measurements/**']
   pull_request:
-    paths-ignore: ['README.md', 'AGENTS.md', 'CLAUDE.md', 'SECURITY.md', 'docs/**', 'AppStore/**', 'Measurements/**']
+    # Only confirmed non-inputs are excluded; shipped content and unknown paths run.
+    paths-ignore:
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'SECURITY.md'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE*'
+      - '.github/CODEOWNERS'
+      - '.vscode/**'
   workflow_dispatch:
 
 permissions:
