@@ -1,3 +1,5 @@
+$line-color: #074976;
+
 // The flex values mirror the AngularJS Material layout attributes the
 // original app used, so the rendering is identical.
 :host {
@@ -28,6 +30,11 @@
   font-weight: bold;
   color: inherit;
   cursor: pointer;
+}
+
+.refresh-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .board {
@@ -116,7 +123,7 @@
   font-size: 11px;
 
   a {
-    color: #074976;
+    color: $line-color;
   }
 }
 
@@ -125,7 +132,7 @@
   left: 14%;
   top: 0;
   height: 116px;
-  border-left: 5px solid #074976;
+  border-left: 5px solid $line-color;
 }
 
 .line-dot-upper {
@@ -133,7 +140,7 @@
   left: calc(14% - 18px);
   top: 116px;
   border-radius: 50%;
-  background-color: #074976;
+  background-color: $line-color;
   width: 40px;
   height: 40px;
 }
@@ -143,7 +150,7 @@
   left: 14%;
   top: 147px;
   height: 155px;
-  border-left: 5px dotted #074976;
+  border-left: 5px dotted $line-color;
 }
 
 .line-dot-lower {
@@ -151,7 +158,7 @@
   left: calc(14% - 18px);
   top: 304px;
   border-radius: 50%;
-  background-color: #074976;
+  background-color: $line-color;
   width: 40px;
   height: 40px;
 }
@@ -161,5 +168,5 @@
   left: 14%;
   top: 343px;
   height: calc(100vh - 343px);
-  border-left: 5px solid #074976;
+  border-left: 5px solid $line-color;
 }

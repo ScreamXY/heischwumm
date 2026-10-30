@@ -1,7 +1,6 @@
-import { httpResource, HttpResourceRef } from '@angular/common/http';
+import { httpResource } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { APP_ID, APP_VERSION } from '../app-info';
 import { epochSecondsToMilliseconds } from '../shared/time';
 
 // Aare.guru API (https://aareguru.existenz.ch/): every value can be null at any time.
@@ -24,10 +23,13 @@ export interface AareInfo {
 
 export const AARE_URL = 'https://aareguru.existenz.ch/v2018/current';
 const CITY = 'bern';
+// Aare.guru asks every client to send an "app" and a "version" parameter.
+const APP_ID = 'ch.schwumm.heischwumm';
+const APP_VERSION = '2.0.0';
 
 @Injectable({ providedIn: 'root' })
 export class AareService {
-  public readonly current: HttpResourceRef<AareInfo | undefined> = httpResource<AareInfo>(
+  public readonly current = httpResource<AareInfo>(
     () => ({
       url: AARE_URL,
       params: { city: CITY, app: APP_ID, version: APP_VERSION },

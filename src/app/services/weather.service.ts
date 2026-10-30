@@ -1,4 +1,4 @@
-import { httpResource, HttpResourceRef } from '@angular/common/http';
+import { httpResource } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { epochSecondsToMilliseconds } from '../shared/time';
@@ -113,7 +113,7 @@ const WEATHER_ICONS: Record<number, string> = {
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
-  public readonly weather: HttpResourceRef<WeatherInfo | undefined> = httpResource<WeatherInfo>(
+  public readonly weather = httpResource<WeatherInfo>(
     () => ({
       url: FORECAST_URL,
       params: {

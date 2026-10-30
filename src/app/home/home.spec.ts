@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AARE_URL } from '../services/aare.service';
 import { CONNECTIONS_URL, SbbConnectionsResponse } from '../services/sbb.service';
 import { FORECAST_URL } from '../services/weather.service';
-import { Home, LEGAL_LINKS } from './home';
+import { Home } from './home';
 
 function connectionsResponse(to: string): SbbConnectionsResponse {
   return {
@@ -158,10 +158,8 @@ describe('Home', () => {
     expect(privacy?.getAttribute('href')).toBe(
       'https://screamxy.github.io/apps/heischwumm/privacy/',
     );
-    expect(privacy?.getAttribute('href')).toBe(LEGAL_LINKS.privacy);
     expect(privacy?.getAttribute('target')).toBeNull();
     expect(imprint?.getAttribute('href')).toBe('https://screamxy.github.io/legal/');
-    expect(imprint?.getAttribute('href')).toBe(LEGAL_LINKS.imprint);
     expect(imprint?.getAttribute('target')).toBeNull();
   });
 

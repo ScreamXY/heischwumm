@@ -10,7 +10,7 @@ import { WeatherService } from '../services/weather.service';
 import { ProgressSpinner } from '../shared/progress-spinner/progress-spinner';
 
 /** Legal pages hosted on the ScreamXY portal; linked from the Aare attribution line. */
-export const LEGAL_LINKS = {
+const LEGAL_LINKS = {
   privacy: 'https://screamxy.github.io/apps/heischwumm/privacy/',
   imprint: 'https://screamxy.github.io/legal/',
 } as const;

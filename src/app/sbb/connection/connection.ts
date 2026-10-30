@@ -46,8 +46,5 @@ function toConnectionView(connection: SbbConnection): ConnectionView {
 }
 
 function delayString(delay: number | null): string {
-  if (delay) {
-    return `(+${delay})`;
-  }
-  return '';
+  return delay ? `(+${delay})` : '';
 }

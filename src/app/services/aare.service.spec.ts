@@ -3,7 +3,6 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { APP_ID, APP_VERSION } from '../app-info';
 import { AARE_URL, AareService } from './aare.service';
 
 describe('AareService', () => {
@@ -28,8 +27,8 @@ describe('AareService', () => {
     const request = httpMock.expectOne((req) => req.url === AARE_URL);
     expect(request.request.method).toBe('GET');
     expect(request.request.params.get('city')).toBe('bern');
-    expect(request.request.params.get('app')).toBe(APP_ID);
-    expect(request.request.params.get('version')).toBe(APP_VERSION);
+    expect(request.request.params.get('app')).toBe('ch.schwumm.heischwumm');
+    expect(request.request.params.get('version')).toBe('2.0.0');
 
     request.flush({ aare: { timestamp: 1781088000, temperature: 16.1, flow: 146 } });
     await TestBed.inject(ApplicationRef).whenStable();

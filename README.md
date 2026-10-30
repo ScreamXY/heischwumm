@@ -8,25 +8,27 @@ standalone components, signals and `httpResource` — the design is unchanged.
 
 ## Development
 
-Requires Node 26 (see `.nvmrc`).
+Requires Node 26 (see `.nvmrc`; mise or nvm can switch to it).
 
 The Vite override keeps the dev server on the patched 8.3 line. Remove it once
 `@angular/build` requires Vite 8.3.3 or newer.
 
 ```sh
-npm install
-npm start          # dev server on http://localhost:4200
-npm test           # unit tests (Vitest)
-npm run e2e        # end-to-end tests (Playwright, APIs mocked)
-npm run lint       # ESLint
-npm run format     # Prettier
-npm run build      # production build
+npm ci
+npm start             # dev server on http://localhost:4200
+npx tsc -b            # type check (app, unit tests, e2e tests)
+npm test              # unit tests (Vitest)
+npm run e2e           # end-to-end tests (Playwright, APIs mocked)
+npm run lint          # ESLint
+npm run format        # Prettier (format:check only checks)
+npm run build         # production build
 ```
 
 ## CI & Deployment
 
-The [CI workflow](.github/workflows/ci.yml) typechecks (`tsc -b`), lints,
-runs the unit and e2e tests and builds on every push and pull request.
+The [CI workflow](.github/workflows/ci.yml) runs the type check, lint, format
+check, unit tests and production build for pushes to `main` and for pull
+requests. The e2e tests run only locally.
 
 The [Deploy workflow](.github/workflows/deploy.yml) publishes every push to
 `main` through this repo's GitHub Pages (source: GitHub Actions) at

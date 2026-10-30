@@ -1,9 +1,10 @@
 # Heischwumm
 
 - Angular dashboard deployed at `/heischwumm/`. Preserve the base href and existing hash routes.
-- Use the Node version in `.nvmrc` (via mise if needed), `npm ci`, `npx tsc -b`, `npm run lint`, `npm test`, and `npm run build`.
+- Use the Node version in `.nvmrc` (via mise if needed), `npm ci`, `npx tsc -b`, `npm run lint`, `npm run format:check`, `npm test`, and `npm run build`.
 - Keep unit tests deterministic and mock external transport/weather services. Browser tests run against the local app.
 - Use standalone components, signals, strict TypeScript and accessible responsive layouts. Preserve source attribution and stale/error states.
+- State visibility on every class member (`private`, or `public` when the template uses it) and always use braces on `if`/`else`. ESLint checks both.
 
 ## Shared release and CI rules
 

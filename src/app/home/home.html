@@ -1,7 +1,12 @@
 <div class="header">
   <h1 class="title">Heischwumm</h1>
-  <button class="refresh" type="button" (click)="reload()">
-    <i class="material-icons">autorenew</i>
+  <button class="refresh" type="button" aria-label="Daten neu laden" (click)="reload()">
+    <svg class="refresh-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
+      />
+    </svg>
     {{ timeCounter() }}
   </button>
 </div>
@@ -10,7 +15,7 @@
     <div class="container sbb sbb-thun">
       <h3>Thun</h3>
       @if (thun.isLoading()) {
-        <app-progress-spinner [diameter]="80" />
+        <app-progress-spinner />
       } @else if (thun.hasValue()) {
         <app-connection [connectionData]="thun.value()" />
       }
@@ -19,7 +24,7 @@
     <div class="container sbb">
       <h3>Muri</h3>
       @if (muri.isLoading()) {
-        <app-progress-spinner [diameter]="80" />
+        <app-progress-spinner />
       } @else if (muri.hasValue()) {
         <app-connection [connectionData]="muri.value()" />
       }
@@ -39,7 +44,7 @@
         />
       }
       @if (weather.isLoading()) {
-        <app-progress-spinner [diameter]="80" />
+        <app-progress-spinner />
       } @else {
         <div class="data-row">
           <div class="data-labels">
@@ -73,7 +78,7 @@
     <div class="container aare">
       <h3>Wasser Aare</h3>
       @if (aare.isLoading()) {
-        <app-progress-spinner [diameter]="80" />
+        <app-progress-spinner />
       } @else if (aare.hasValue()) {
         @let aareInfo = aare.value();
         <div class="data-row">
